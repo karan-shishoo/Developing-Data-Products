@@ -1,0 +1,51 @@
+---
+title: "simple plotly presentation"
+author: "Karan Shishoo"
+date: "May 17, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction to plot
+
+The plot shown on the next slide is simply an interactve plot (made using plotly) of random normal distribution of 100 points [mean is 0 std is 1] The code used is shown below
+
+```{r, echo=TRUE, eval=FALSE}
+library(plotly)
+f <- list(
+  family = "Courier New, monospace",
+  size = 18,
+  color = "#7f7f7f"
+)
+
+x <- list(title = "x Axis", titlefont = f)
+
+y <- list(title = "y Axis", titlefont = f)
+
+plot_ly(x = ~rnorm(100), y = ~rnorm(100), mode="markers")%>%
+  layout(xaxis = x, yaxis = y)
+
+```
+
+## Plot
+
+```{r, warning=FALSE,comment="" , message=FALSE}
+library(plotly)
+f <- list(
+  family = "Courier New, monospace",
+  size = 18,
+  color = "#7f7f7f"
+)
+
+x <- list(title = "x Axis", titlefont = f)
+
+y <- list(title = "y Axis", titlefont = f)
+
+plot_ly(x = ~rnorm(100), y = ~rnorm(100), mode="markers")%>%
+  layout(xaxis = x, yaxis = y)
+
+```
+
