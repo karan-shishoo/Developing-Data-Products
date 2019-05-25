@@ -1,5 +1,5 @@
 ---
-title: "Reproducable Pitch Presentation"
+title: "Reproducable Pitch Presentation - randomized normal distribution"
 author: "Karan Shishoo"
 date: "May 25, 2019"
 output: ioslides_presentation
@@ -17,41 +17,29 @@ knitr::opts_chunk$set(size = "tiny")
 
 ## Intoduction
 
-This is a Reproducable pitch Presentation, which is part 2 of the final project under developing data products course of John Hopkins on Coursera.
+This is a Reproducable Pitch Presentation, which is part 2 of the final project under developing data products course of John Hopkins on Coursera. The first part of this project had us develop and publish a shiny app which took an input from the user and provided an output using that input. 
 
-## Slide with Bullets
+The application is hosted on shinyapps.io and can be accessed from [here](https://kshishoo.shinyapps.io/my_first_web_app/)
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+The files (ui.R and server.R) are hosted on github and they can be found [here](https://github.com/karan-shishoo/Developing-Data-Products/tree/master/web_app/my_first_web_app)
 
-## UI.R - Sidebar Panel
-The Sidebar Panel is setup to take in 4 inputs from the user (with default values set for each input)
+## Usage
+
+This application allows the user to set a few properties of a random normal distribution
+
+- the number of datasets
+- the variance
+- the mean
+
+It also allows them to  set the number of bins of the resultant histogram.
+
+The idea of the application is to allow people to visualize how the output of a random normal distribution changes as these variables are changed.
+
+## How the execution looks
+The Sidebar Panel is setup to take in 4 inputs from the user (with default values set for each input) which are then used by the server as shown below
 
 ```{r r.ui, include=TRUE,echo=TRUE, eval=FALSE, tidy=FALSE, size="tiny"}
-    sidebarPanel(
-       sliderInput("xnum", "Number of datasets to plot:",
-                   min = 2, max = 300, value = 100),
-       sliderInput("xvar", "Variance in x:",
-                   min = 1,max = 50, value = 1),
-       sliderInput("xmean", "Mean in X:",
-                   min = -25, max = 25, value = 0),
-       sliderInput("bins", "Number of bins:",
-                   min = 1, max = 50, value = 30))
-```
-
-## 
-
-## Server.R
-```{r server.r, include=TRUE,echo=TRUE, eval=FALSE, tidy=FALSE, size="tiny"}
-library(shiny)
-library(plotly)
-
-# Define server logic required to draw a histogram
-shinyServer(function(input, output) {
-   
-  output$distPlot <- renderPlot({
-    
+output$distPlot <- renderPlot({
     # generate bins based on input$bins from ui.R
     x    <- rnorm(input$xnum, input$xmean, input$xvar)
     bins <- seq(min(x), max(x), length.out = input$bins + 1)
@@ -59,8 +47,11 @@ shinyServer(function(input, output) {
     # draw the histogram with the specified number of bins
     hist(x, breaks = bins, main = "Normal Distribution",
          col = 'darkgray', border = 'white')
-    
-  })
-  
-})
+```
+
+## How the Output looks
+below is an example output assuming some inputs
+```{r server.r, include=TRUE,echo=TRUE,warning=FALSE,message=FALSE}
+library(plotly); x <- rnorm(100,0,20); bins <- 20; hist(x, breaks = bins,
+  main = "Normal Distribution", col = 'darkgray', border = 'white')
 ```
