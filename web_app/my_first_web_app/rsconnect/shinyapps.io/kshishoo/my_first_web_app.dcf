@@ -1,0 +1,12 @@
+name: my_first_web_app
+title: my_first_web_app
+username:
+account: kshishoo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 948473
+bundleId: 2108178
+url: https://kshishoo.shinyapps.io/my_first_web_app/
+when: 1558788576.24514
+asMultiple: FALSE
+asStatic: FALSE

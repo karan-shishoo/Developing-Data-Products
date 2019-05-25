@@ -1,0 +1,66 @@
+---
+title: "Reproducable Pitch Presentation"
+author: "Karan Shishoo"
+date: "May 25, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(size = "tiny")
+```
+
+## Intoduction
+
+This is a Reproducable pitch Presentation, which is part 2 of the final project under developing data products course of John Hopkins on Coursera.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## UI.R - Sidebar Panel
+The Sidebar Panel is setup to take in 4 inputs from the user (with default values set for each input)
+
+```{r r.ui, include=TRUE,echo=TRUE, eval=FALSE, tidy=FALSE, size="tiny"}
+    sidebarPanel(
+       sliderInput("xnum", "Number of datasets to plot:",
+                   min = 2, max = 300, value = 100),
+       sliderInput("xvar", "Variance in x:",
+                   min = 1,max = 50, value = 1),
+       sliderInput("xmean", "Mean in X:",
+                   min = -25, max = 25, value = 0),
+       sliderInput("bins", "Number of bins:",
+                   min = 1, max = 50, value = 30))
+```
+
+## 
+
+## Server.R
+```{r server.r, include=TRUE,echo=TRUE, eval=FALSE, tidy=FALSE, size="tiny"}
+library(shiny)
+library(plotly)
+
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+   
+  output$distPlot <- renderPlot({
+    
+    # generate bins based on input$bins from ui.R
+    x    <- rnorm(input$xnum, input$xmean, input$xvar)
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    
+    # draw the histogram with the specified number of bins
+    hist(x, breaks = bins, main = "Normal Distribution",
+         col = 'darkgray', border = 'white')
+    
+  })
+  
+})
+```
